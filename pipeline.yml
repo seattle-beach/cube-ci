@@ -48,5 +48,4 @@ jobs:
       file: cube-ci/tasks/test-build-cube-draft.yml
     - put: deploy-cube-app
       params:
-        path: cube-draft-build/build.zip
-        manifest: cube-draft/manifest.yml
+        manifest: cube-draft-build/manifest.yml
