@@ -14,4 +14,4 @@ outputs:
 - name: compiledApp
 
 run:
-  path: ./cube-ci/tasks/cube-untap/test-build.shsh
+  path: ./cube-ci/tasks/cube-untap/test-build.sh
