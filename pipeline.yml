@@ -29,8 +29,11 @@ resources:
 jobs:
 - name: cube-untap
   plan:
-    - get: cube-untap
-      trigger: true
+    - aggregate:
+      - get: cube-ci
+        trigger: true
+      - get: cube-untap
+        trigger: true
     - task: test-and-build
       file: cube-ci/tasks/cube-untap/test-build.yml
     - put: deploy-cube-app
