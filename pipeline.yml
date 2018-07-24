@@ -1,0 +1,48 @@
+resources:
+- name: deploy-cube-untap
+  type: cf
+  source:
+    api: https://api.run.pivotal.io
+    username: {{cf_username}}
+    password: {{cf_password}}
+    organization: seattle-beach
+    space: cube-drafter
+- name: cube-ci
+  type: git
+  source:
+    uri: git@github.com:seattle-beach/cube-ci.git
+    branch: master
+    private_key: {{cube_ci_key}}
+- name: cube-untap
+  type: git
+  source:
+    uri: git@github.com:seattle-beach/cube-untap.git
+    branch: master
+    private_key: {{cube_untap_key}}
+- name: cube-draft
+  type: git
+  source:
+    uri: git@github.com:seattle-beach/cube-draft.git
+    branch: master
+    private_key: {{cube_draft_key}}
+
+jobs:
+- name: test-cube-untap
+  plan:
+    - get: cube-untap
+      trigger: true
+    - task: test
+      file: cube-untap/ci/tasks/test.yml
+    - put: deploy-cube-untap
+      params:
+        path: compiledApp/cube.jar
+        manifest: cube-untap/manifest.yml
+- name: test-cube-draft
+  plan:
+    - aggregate:
+      - get: cube-ci
+        trigger: true
+      - get: cube-draft
+        trigger: true
+    - task: test
+      file: cube-ci/tasks/test-cube-draft.yml
