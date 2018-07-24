@@ -3,4 +3,4 @@ cd cube-draft
     yarn install && yarn test && yarn build
 cd ../
 
-cp -r cube-draft/build/* cube-draft-build
+zip -r cube-draft-build/build.zip cube-draft/build/*
