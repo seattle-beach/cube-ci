@@ -4,5 +4,3 @@ cd cube-draft
 cd ../
 
 cp -r cube-draft/build/* cube-draft-build
-
-exit 1

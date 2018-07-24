@@ -2,3 +2,4 @@
 
 ./bin/update-pipeline
 git push
+./bin/check-this-resource
