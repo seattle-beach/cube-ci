@@ -27,17 +27,17 @@ resources:
     private_key: {{cube_draft_key}}
 
 jobs:
-- name: test-cube-untap
+- name: cube-untap
   plan:
     - get: cube-untap
       trigger: true
-    - task: test
-      file: cube-untap/ci/tasks/test.yml
+    - task: test-and-build
+      file: cube-ci/tasks/test.yml
     - put: deploy-cube-app
       params:
         path: compiledApp/cube.jar
         manifest: cube-untap/manifest.yml
-- name: test-cube-draft
+- name: cube-draft
   plan:
     - aggregate:
       - get: cube-ci
