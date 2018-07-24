@@ -32,7 +32,7 @@ jobs:
     - get: cube-untap
       trigger: true
     - task: test-and-build
-      file: cube-ci/tasks/test.yml
+      file: cube-ci/tasks/cube-untap/test-build.yml
     - put: deploy-cube-app
       params:
         path: compiledApp/cube.jar
@@ -45,7 +45,7 @@ jobs:
       - get: cube-draft
         trigger: true
     - task: test-and-build
-      file: cube-ci/tasks/test-build-cube-draft.yml
+      file: cube-ci/tasks/cube-draft/test-build.yml
     - put: deploy-cube-app
       params:
         manifest: cube-draft-build/manifest.yml
