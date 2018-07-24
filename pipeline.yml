@@ -1,5 +1,5 @@
 resources:
-- name: deploy-cube-untap
+- name: deploy-cube-app
   type: cf
   source:
     api: https://api.run.pivotal.io
@@ -33,7 +33,7 @@ jobs:
       trigger: true
     - task: test
       file: cube-untap/ci/tasks/test.yml
-    - put: deploy-cube-untap
+    - put: deploy-cube-app
       params:
         path: compiledApp/cube.jar
         manifest: cube-untap/manifest.yml
@@ -44,5 +44,8 @@ jobs:
         trigger: true
       - get: cube-draft
         trigger: true
-    - task: test
-      file: cube-ci/tasks/test-cube-draft.yml
+    - task: test-and-build
+      file: cube-ci/tasks/test-build-cube-draft.yml
+    - put: deploy-cube-app
+      params:
+        manifest: cube-draft/manifest.yml

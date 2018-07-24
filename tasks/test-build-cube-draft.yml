@@ -11,4 +11,4 @@ inputs:
 - name: cube-ci
 
 run:
-  path: ./cube-ci/tasks/test-cube-draft.sh
+  path: ./cube-ci/tasks/test-build-cube-draft.sh
