@@ -47,10 +47,12 @@ jobs:
         trigger: true
       - get: cube-draft
         trigger: true
-    - task: test-and-build
-      file: cube-ci/tasks/cube-draft/test-build.yml
-    - task: integration-tests
+    - task: test
+      file: cube-ci/tasks/cube-draft/test.yml
+    - task: integration
       file: cube-ci/tasks/cube-draft/integration.yml
+    - task: build
+      file: cube-ci/tasks/cube-draft/build.yml
     - put: deploy-cube-app
       params:
         manifest: cube-draft-build/manifest.yml

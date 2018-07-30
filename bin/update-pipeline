@@ -1,3 +1,3 @@
 #!/bin/bash
 
-fly -t concourse sp -c pipeline.yml -p cube -l secrets/secrets.yml
+fly -t concourse set-pipeline -c pipeline.yml -p cube -l secrets/secrets.yml

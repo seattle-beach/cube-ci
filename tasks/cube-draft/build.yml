@@ -1,0 +1,17 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: node
+    tag: latest
+
+inputs:
+- name: cube-draft
+- name: cube-ci
+
+outputs:
+- name: cube-draft-build
+
+run:
+  path: ./cube-ci/tasks/cube-draft/build.sh

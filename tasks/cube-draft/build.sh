@@ -1,6 +1,6 @@
 #! /bin/sh
 cd cube-draft
-    yarn install && yarn test && yarn build
+    yarn install && yarn build
 cd ../
 
 mkdir cube-draft-build/build
