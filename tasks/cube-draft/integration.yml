@@ -13,5 +13,10 @@ inputs:
 outputs:
 - name: cube-draft-build
 
+caches: 
+- path: yarn-cache
+
+params: {"YARN_CACHE_FOLDER" : "../yarn-cache"}
+
 run:
   path: ./cube-ci/tasks/cube-draft/integration.sh

@@ -40,6 +40,7 @@ jobs:
       params:
         path: compiledApp/cube.jar
         manifest: cube-untap/manifest.yml
+
 - name: cube-draft-test
   plan:
     - aggregate:
@@ -51,6 +52,17 @@ jobs:
       file: cube-ci/tasks/cube-draft/test.yml
     - task: integration
       file: cube-ci/tasks/cube-draft/integration.yml
+
+- name: cube-draft-deploy
+  serial: true
+  plan:
+    - aggregate:
+      - get: cube-ci
+        trigger: true
+        passed: ["cube-draft-test"]
+      - get: cube-draft
+        trigger: true
+        passed: ["cube-draft-test"]
     - task: build
       file: cube-ci/tasks/cube-draft/build.yml
     - put: deploy-cube-app
