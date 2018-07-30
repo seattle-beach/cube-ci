@@ -40,7 +40,7 @@ jobs:
       params:
         path: compiledApp/cube.jar
         manifest: cube-untap/manifest.yml
-- name: cube-draft
+- name: cube-draft-test
   plan:
     - aggregate:
       - get: cube-ci
