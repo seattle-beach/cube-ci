@@ -25,6 +25,12 @@ resources:
     uri: git@github.com:seattle-beach/cube-draft.git
     branch: master
     private_key: {{cube_draft_key}}
+- name: pivotal-tracker
+  type: tracker
+  source:
+    token: {{pivotal_tracker_token}}
+    project_id: "2185360"
+    tracker_url: https://www.pivotaltracker.com
 
 jobs:
 - name: cube-untap
@@ -117,3 +123,9 @@ jobs:
           path: compiledApp/cube.jar
           manifest: cube-untap/manifest.yml
           current_app_name: cube-untap
+    - put: pivotal-tracker
+      params:
+        repos:
+        - cube-ci
+        - cube-draft
+        - cube-untap
