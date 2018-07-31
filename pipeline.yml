@@ -36,7 +36,8 @@ jobs:
         trigger: true
     - task: test-and-build
       file: cube-ci/tasks/cube-untap/test-build.yml
-    - put: deploy-cube-app
+    - put: deploy-cube-untap-integ
+      resource: deploy-cube-app
       params:
         path: compiledApp/cube.jar
         manifest: cube-untap/manifest.yml
@@ -51,10 +52,8 @@ jobs:
         trigger: true
     - task: test
       file: cube-ci/tasks/cube-draft/test.yml
-    - task: integration
-      file: cube-ci/tasks/cube-draft/integration.yml
 
-- name: cube-draft-deploy
+- name: cube-draft-deploy-integ
   serial: true
   plan:
     - aggregate:
@@ -66,6 +65,55 @@ jobs:
         passed: ["cube-draft-test"]
     - task: build
       file: cube-ci/tasks/cube-draft/build.yml
-    - put: deploy-cube-app
+    - put: deploy-cube-draft-integ
+      resource: deploy-cube-app
       params:
         manifest: cube-draft-build/manifest.yml
+        current_app_name: cube-draft-integ
+
+- name: integration-tests
+  serial: true
+  plan:
+    - aggregate:
+      - get: cube-ci
+        trigger: true
+        passed: ["cube-draft-deploy-integ","cube-untap"]
+      - get: cube-draft
+        trigger: true
+        passed: ["cube-draft-deploy-integ"]
+      - get: cube-untap
+        trigger: true
+        passed: ["cube-untap"]
+    - task: integration
+      file: cube-ci/tasks/cube-draft/integration.yml
+
+- name: deploy-to-prod
+  serial: true
+  plan:
+    - aggregate:
+      - get: cube-ci
+        trigger: true
+        passed: ["integration-tests"]
+      - get: cube-draft
+        trigger: true
+        passed: ["integration-tests"]
+      - get: cube-untap
+        trigger: true
+        passed: ["integration-tests"]
+    - aggregate:
+      - task: build-cube-draft
+        file: cube-ci/tasks/cube-draft/build.yml
+      - task: build-cube-untap
+        file: cube-ci/tasks/cube-untap/test-build.yml
+    - aggregate:
+      - put: deploy-cube-draft-prod
+        resource: deploy-cube-app
+        params:
+          manifest: cube-draft-build/manifest.yml
+          current_app_name: cube-draft
+      - put: deploy-cube-untap-prod
+        resource: deploy-cube-app
+        params:
+          path: compiledApp/cube.jar
+          manifest: cube-untap/manifest.yml
+          current_app_name: cube-untap
