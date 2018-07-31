@@ -15,8 +15,9 @@ caches:
 
 params: {
   "YARN_CACHE_FOLDER": "../yarn-cache",
-  "BACKEND_URL": "https://cube-untap-integ.cfapps.io/",
-  "CYPRESS_baseUrl": "https://cube-draft-integ.cfapps.io/"
+  "CYPRESS_BACKEND_URL": "https://cube-untap-integ.cfapps.io/",
+  "CYPRESS_baseUrl": "https://cube-draft-integ.cfapps.io/",
+  "CYPRESS_chromeWebSecurity": "false"
 }
 
 run:
