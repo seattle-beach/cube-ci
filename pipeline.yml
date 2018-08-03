@@ -48,6 +48,8 @@ jobs:
         path: compiledApp/cube.jar
         manifest: cube-untap/manifest.yml
         current_app_name: cube-untap-integ
+        environment_variables:
+          SPRING_PROFILES_ACTIVE: "seed-database"
 
 - name: cube-draft-test
   plan:
