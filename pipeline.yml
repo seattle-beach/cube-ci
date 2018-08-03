@@ -46,7 +46,7 @@ jobs:
       resource: deploy-cube-app
       params:
         path: compiledApp/cube.jar
-        manifest: cube-untap/manifest.yml
+        manifest: cube-untap/manifest.integ.yml
         current_app_name: cube-untap-integ
         environment_variables:
           SPRING_PROFILES_ACTIVE: "seed-database"
@@ -123,7 +123,7 @@ jobs:
         resource: deploy-cube-app
         params:
           path: compiledApp/cube.jar
-          manifest: cube-untap/manifest.yml
+          manifest: cube-untap/manifest.prod.yml
           current_app_name: cube-untap
     - put: pivotal-tracker
       params:
